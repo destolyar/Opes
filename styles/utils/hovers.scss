@@ -1,0 +1,9 @@
+@import './colors.scss';
+
+@mixin default-hover {
+  &:hover {
+    transform: scale(1.02);
+    transition: 0.2s;
+    cursor: pointer;
+  }
+}
