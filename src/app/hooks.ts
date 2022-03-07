@@ -1,6 +1,16 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from './store';
+import { userSliceState } from "../types";
+import { RootState } from '../types';
 
-// Use throughout your app instead of plain `useDispatch` and `useSelector`
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export function useAuth(){
+  const {email, token, id}:userSliceState = useSelector((state: RootState) => state.user);
+
+  return{
+    isAuth: !!email,
+    email,
+    token,
+    id
+  }
+}
+

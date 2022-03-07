@@ -1,0 +1,15 @@
+@import '../utils/utils.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+
+  &__email-title, &__password-title {
+    @include subtitle;
+  }
+
+  &__email-input, &__password-input {
+    @include auth-input;
+  }
+}
