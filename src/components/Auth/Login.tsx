@@ -1,9 +1,33 @@
 import '../../styles/components/login.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form } from './Form';
 import { animated, useSpring } from 'react-spring';
+import { useDispatch } from 'react-redux';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { setUser } from '../../app/slices/userSlice';
+import { setLogIn } from '../../app/slices/authSlice';
+
 
 export const Login: React.FunctionComponent = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = (email: string, password: string): void => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then(({user}) => {
+        dispatch(setUser({
+          email: user.email,
+          id: user.uid
+        }));
+        dispatch(setLogIn({
+          isAuth: true
+        }));
+        navigate('/')
+      })
+      .catch(console.error)
+  }
+
   const textDisplay = useSpring({
     to: { opacity: 1 },
     from: { opacity: 0 },
@@ -16,10 +40,9 @@ export const Login: React.FunctionComponent = () => {
         <h1 className='login__title'>The love of money increases 
           as wealth itself increases (Juvenalis)</h1>
       </animated.h1>}
-      
 
-      <Form/>
-      <button className='login__button'>Sign in</button>
+      <Form title="login" handleClick={handleLogin}/>
+
       <p className='login__text'>Don't have an account yet?
         <Link className='login__text__link' to="/register"> Register</Link>
       </p>

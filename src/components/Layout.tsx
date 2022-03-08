@@ -3,12 +3,7 @@ import '../styles/layout.scss'
 
 export const Layout: React.FunctionComponent = () => {
   return(
-    <div className='layout'>
-      <header>
-        <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
-      </header>
+    <div className='layout'>     
       <Outlet />
 
       <footer className='layout__footer'>

@@ -1,7 +1,8 @@
 import { useState } from "react"
+import { FormProps } from "../../types"
 import '../../styles/components/form.scss'
 
-export const Form: React.FunctionComponent = () => {
+export const Form: React.FunctionComponent<FormProps> = (props) => {
   let [email, setEmail] = useState<string>('')
   let [password, setPassword] = useState<string>('')
 
@@ -18,6 +19,10 @@ export const Form: React.FunctionComponent = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+
+      <button className={`${props.title}__button`} onClick={() => props.handleClick(email, password)}>
+        {(props.title === 'login') ? 'Sign in' : "Sign Up"}
+      </button>
     </div>
   )
 }
