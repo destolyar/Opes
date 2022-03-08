@@ -1,4 +1,4 @@
-import '../../styles/components/register.scss';
+import '../../styles/components/auth.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form } from './Form';
 import { animated, useSpring } from 'react-spring';
@@ -6,10 +6,12 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../app/slices/userSlice'
 import { setLogIn } from '../../app/slices/authSlice';
+import { useState } from 'react';
 
 export const Register: React.FunctionComponent = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  let [errorText, setErrorText] = useState<string>('');
 
   const handleRegister = (email: string, password: string): void => {
     const auth = getAuth();
@@ -25,7 +27,7 @@ export const Register: React.FunctionComponent = () => {
         }));
         navigate('/')
       })
-      .catch((e) => console.log(e))
+      .catch(() => {setErrorText(errorText = "Wrong email or password format")})
   }
 
   const textDisplay = useSpring({
@@ -43,6 +45,8 @@ export const Register: React.FunctionComponent = () => {
       
 
       <Form title="register" handleClick={handleRegister}/>
+
+      <p className='login__error'>{errorText}</p>
 
       <p className='register__text'>Already have account?
         <Link className='register__text__link' to="/login"> Login</Link>

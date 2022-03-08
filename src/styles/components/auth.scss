@@ -1,6 +1,6 @@
 @import '../utils/utils.scss';
 
-.login {
+.login, .register {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -33,5 +33,10 @@
 
   &__button {
     @include auth-button;
+  }
+
+  &__error {
+    @include description;
+    color: $error-color;
   }
 }
