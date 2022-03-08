@@ -1,0 +1,15 @@
+@import '../utils/font.scss';
+
+@mixin auth-input {
+  width: 400px;
+  height: 50px;
+  padding-left: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  @include subtitle;
+
+  @include laptop {
+    width: 350px;
+  }
+}

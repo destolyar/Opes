@@ -1,0 +1,22 @@
+@import './colors.scss';
+@import './font.scss';
+
+@mixin auth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  @include auth-button-text;
+  border: 0;
+  border-radius: 10px;
+  background-color: $primary-button-text-color;
+
+  @include laptop {
+    width: 350px;
+  }
+
+  &:hover {
+    @include default-hover;
+    background-color: $primary-button-hover-color;
+  }
+}
