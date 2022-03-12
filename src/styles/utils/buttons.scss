@@ -20,3 +20,35 @@
     background-color: $primary-button-hover-color;
   }
 }
+
+@mixin history-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+
+  &:hover {
+    @include default-hover;
+  }
+}
+
+@mixin add-data-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 30px;
+  border: 0;
+  border-radius: 50%;
+  background-color: $primary-button-color;
+
+  &:hover {
+    @include default-hover;
+    padding: 60px;
+    transition: 0.5s;
+    transform: rotate(360deg);
+    background-color: $primary-button-hover-color;
+  }
+}

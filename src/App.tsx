@@ -2,11 +2,11 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from './components/Auth/Login';
 import { Register } from './components/Auth/Register';
 import { Home } from './components/Home/Home';
-import { useSelector } from 'react-redux'
 import { Layout } from './components/Layout';
-import { RootState } from './app/store';
-import { useEffect } from 'react';
 import { useAuth } from './app/hooks'
+import { Passive } from './components/Passive/Passive';
+import { Wallets } from './components/Wallets/Wallets';
+import { Stocks } from './components/Stocks/Stocks';
 
 const App: React.FunctionComponent = () => {
   let userAuth = useAuth();
@@ -17,6 +17,9 @@ const App: React.FunctionComponent = () => {
         <Route index element={(userAuth) ? <Home/> : <Navigate to={'/login'}/>}></Route>
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/register' element={<Register/>}></Route>
+        <Route path='/wallets' element={<Wallets/>}></Route>
+        <Route path='/stocks' element={<Stocks/>}></Route>
+        <Route path='/passive' element={<Passive/>}></Route>
       </Route>
     </Routes>
 )}
