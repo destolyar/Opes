@@ -8,7 +8,6 @@ import { setUser } from '../../app/slices/userSlice';
 import { setLogIn } from '../../app/slices/authSlice';
 import { useState } from 'react';
 
-
 export const Login: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

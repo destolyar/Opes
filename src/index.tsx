@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import './styles/index.scss'
 import './firebase';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

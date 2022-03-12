@@ -27,7 +27,7 @@ export const Register: React.FunctionComponent = () => {
         }));
         navigate('/')
       })
-      .catch(() => {setErrorText(errorText = "Wrong email or password format")})
+      .catch(() => {setErrorText(errorText = "Something went wrong. Please try again.")})
   }
 
   const textDisplay = useSpring({

@@ -4,7 +4,7 @@ import { userSliceState } from "../../types";
 const initialState: userSliceState = {
   email: null,
   token: null,
-  id: null
+  id: ''
 };
 
 const userSlice = createSlice({
@@ -19,7 +19,7 @@ const userSlice = createSlice({
     removeUser(state) {
       state.email = null;
       state.token = null;
-      state.id = null;
+      state.id = '';
     }
   }
 })
