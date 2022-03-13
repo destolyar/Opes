@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc, getDocs, setDoc, doc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, setDoc, doc, updateDoc, arrayRemove, arrayUnion, query, where } from 'firebase/firestore';
 import { User } from "./types";
 
 
@@ -29,25 +29,16 @@ export default class FirestoreActions {
   }
   async addCard() {
     try {
-      let arrayOfUsers: User | any = []
-      const userRef = collection(db, 'users')
+          let userRef = collection(db, "users");
+          const oldObjectQuery =  query(userRef, where("userId", "==", `${this.id}`))
 
-      const oldObject = await getDocs(userRef)
-      oldObject.forEach((i) => arrayOfUsers.push(i.data()))
-
-      arrayOfUsers.forEach((i:any) => {
-        let userId: string;
-        if(i.userId !== undefined) {
-          userId = i.userId.split(' ')[0]
-        } else {
-          userId = ''
-        }
-        if(userId === this.id) {
-          console.log('we in')
-          const oldObject = i.wallet.cards;
-          const lengthOfOldObject = (oldObject.length === 0) ? 0 : oldObject.length;
+          let oldObject: any = await getDocs(oldObjectQuery)
+          oldObject.forEach((doc: any) => {
+            oldObject = doc.data()
+          })
+          oldObject = oldObject.wallet.cards
           
-          console.log(lengthOfOldObject)
+          const lengthOfOldObject = (oldObject.length === 0) ? 0 : oldObject.length;
 
           const newObject = {
             id: lengthOfOldObject + '' + Math.round(Math.random() * 1000000),
@@ -64,8 +55,6 @@ export default class FirestoreActions {
               allDates: [],
             }
           })
-        }
-      })
     } catch (e) {
       console.error("Error adding document: ", e);
     }

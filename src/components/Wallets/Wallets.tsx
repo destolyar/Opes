@@ -37,7 +37,7 @@ export const Wallets: React.FunctionComponent = () => {
           <input type="text" />
           <input type="text" />
           <input type="text" />
-          <button></button>
+          <button onClick={() => db.addCard()}></button>
         </div>
       </animated.div>
 
