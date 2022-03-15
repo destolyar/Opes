@@ -23,18 +23,21 @@ export default class FirestoreActions {
   constructor(id: string) {
     this.id = id;
   }
-  async displayData() {
-    const docs = await getDocs(collection(db, "Users")) 
-    docs.forEach((i) => console.log(i.data()))
+  async getWalletCards() {
+    const walletCardsRef = collection(db, "walletCards");
+    const cardsRef = query(walletCardsRef, where("userId", "==", `${this.id}`))
+    const cardsSnapshot = await getDocs(cardsRef)
+
+    cardsSnapshot.forEach((i) => console.log(i.data()))
   }
-  async addCard(amount: number, date: string, category: string, isIcome: boolean) {
+  addWalletCard(walletCardInfo: WalletCard) {
     try {
       const walletCardsRef: CollectionReference<DocumentData> = collection(db, "walletCards")
       const data: WalletCard = {
-        amount: amount,
-        category: category,
-        date: date,
-        isIncome: isIcome,
+        amount: walletCardInfo.amount,
+        category: walletCardInfo.category,
+        date: walletCardInfo.date,
+        isIncome: walletCardInfo.isIncome,
         userId: this.id
       }
 

@@ -31,6 +31,8 @@
 
   &__add-data-window-container {
     display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     left: 0;
     top: 0;
@@ -41,12 +43,45 @@
     z-index: 1;
 
     &__form {
-      width: 100%;
-      height: 100%;
+      background-color: $form-background-color;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 30px;
+      border-radius: 20px;
       flex-direction: column;
+
+      &__amount, &__category, &__date {
+        @include default-input;
+      }
+
+      &__collection-expenses {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        &__income, &__expens {
+          flex: 1 1;
+          margin: 0 10px;
+          @include collection-expenses-buttons;
+        }
+
+        &__income {
+          background-color: $income-button-background-color;
+        }
+
+        &__expens {
+          background-color: $expens-button-background-color;
+        }
+      }
+      
+      &__error {
+        @include description;
+        color: $error-color;
+      }
+
+      &__confirm {
+        margin-top: 20px;
+        @include add-wallet-card-button;
+      }
     }
   }
 

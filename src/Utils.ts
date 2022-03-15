@@ -19,4 +19,11 @@ export default class Utils {
       return 'Night';
     }
   }
+
+  public static getWalletCardInfoValid = (amount: number | undefined, category: string | undefined, date: string | undefined): boolean => {
+    if(category === undefined || date === undefined || amount === undefined) {
+      return false
+    }
+    return true
+  }
 }

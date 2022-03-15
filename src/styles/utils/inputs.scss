@@ -1,6 +1,6 @@
 @import '../utils/font.scss';
 
-@mixin auth-input {
+@mixin default-input {
   width: 400px;
   height: 50px;
   padding-left: 15px;
@@ -12,4 +12,9 @@
   @include laptop {
     width: 350px;
   }
+
+  @include phones {
+    width: 300px;
+  }
 }
+

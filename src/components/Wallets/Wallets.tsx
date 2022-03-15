@@ -1,23 +1,18 @@
 import '../../styles/components/wallets.scss'
 import Utils from '../../Utils'
-import FirestoreActions from '../../firebase'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../types'
-import { animated, useSpring } from 'react-spring';
 import { useState } from 'react'
+import { AddWalletCard } from './AddWalletCard'
+import FirestoreActions from '../../firebase'
 
 export const Wallets: React.FunctionComponent = () => {
   let partOfDay: string | undefined = Utils.getPartOfDay()
-  const userId: string | null = useSelector((state: RootState) => state.user.id)
+
+  let [formDisplay, setFormDisplay] = useState<boolean>(false)
+
+  const userId: string = localStorage.getItem('id') || ''
   const db: FirestoreActions = new FirestoreActions(userId);
 
-  let [formDisplayShow, setFormDisplayShow] = useState(false)
-
-  const formDisplayAnimation = useSpring({
-    to: { opacity: 1, transform: 'translateY(0)'},
-    from: {opacity: 0, transform: 'translateY(-100%)'},
-    config: {duration: 2000}
-  })
+  db.getWalletCards()
   
   return(
     <section className="wallets">
@@ -28,20 +23,11 @@ export const Wallets: React.FunctionComponent = () => {
       <div className='wallets__balance'>
         <h1>123124</h1>  
       </div>
+      <div className='wallets__last-transactions'>
 
-      <animated.div style={(formDisplayShow) ? formDisplayAnimation : {}} className='wallets__add-data-window-container' onClick={(e) => {
-        const target = e.target as HTMLTextAreaElement;
-
-        (target.className.toString() === 'wallets__add-data-window-container__form') ? setFormDisplayShow(formDisplayShow = false) : setFormDisplayShow(formDisplayShow = true)}}>
-        <div className='wallets__add-data-window-container__form'>
-          <input type="text" />
-          <input type="text" />
-          <input type="text" />
-          <button onClick={() => db.addCard( 1, '', '', false)}></button>
-        </div>
-      </animated.div>
-
-      <button className='wallets__add-data-button' onClick={() => setFormDisplayShow(true)}>
+      </div>
+      <AddWalletCard formDisplay={formDisplay} changeFormDisplay={setFormDisplay}/>
+      <button className='wallets__add-data-button' onClick={() => setFormDisplay(true)}>
         <div className='wallets__add-data-button__plus'>
           <div className='wallets__add-data-button__plus__vertical-line'></div>
           <div className='wallets__add-data-button__plus__horizontal-line'></div>

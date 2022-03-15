@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface userSliceState {
   email: string | null,
   token: string | null,
@@ -18,6 +20,11 @@ export interface FormProps {
   handleClick: (email: string, password: string) => void
 }
 
+export interface addWalletFormProps {
+  formDisplay: boolean,
+  changeFormDisplay: Dispatch<SetStateAction<boolean>>
+}
+
 export interface User {
   userId: string,
   wallet: Wallet
@@ -30,12 +37,11 @@ export interface Wallet {
   dates: string[]
 }
 
-
 export interface WalletCard {
-  amount: number,
-  category: string,
-  date: string,
-  isIncome: boolean,
-  userId: string
+  amount: number | undefined,
+  category: string | undefined,
+  date: string | undefined,
+  isIncome: boolean | undefined,
+  userId?: string
 }
 
