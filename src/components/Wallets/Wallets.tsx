@@ -31,13 +31,13 @@ export const Wallets: React.FunctionComponent = () => {
 
       <animated.div style={(formDisplayShow) ? formDisplayAnimation : {}} className='wallets__add-data-window-container' onClick={(e) => {
         const target = e.target as HTMLTextAreaElement;
-        console.log(target.className.toString());
+
         (target.className.toString() === 'wallets__add-data-window-container__form') ? setFormDisplayShow(formDisplayShow = false) : setFormDisplayShow(formDisplayShow = true)}}>
         <div className='wallets__add-data-window-container__form'>
           <input type="text" />
           <input type="text" />
           <input type="text" />
-          <button onClick={() => db.addCard()}></button>
+          <button onClick={() => db.addCard( 1, '', '', false)}></button>
         </div>
       </animated.div>
 

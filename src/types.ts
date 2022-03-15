@@ -18,20 +18,24 @@ export interface FormProps {
   handleClick: (email: string, password: string) => void
 }
 
-export interface WalletsCards {
-  date: string,
-  category: string,
-  amount: number,
-  isInput: boolean 
-}
-
-export interface Wallet {
-  cards: WalletsCards[],
-  categories: string[],
-  dates: string[]
-}
-
 export interface User {
   userId: string,
   wallet: Wallet
 }
+
+export interface Wallet {
+  balance: number,
+  cards: WalletCard[],
+  categories: string[],
+  dates: string[]
+}
+
+
+export interface WalletCard {
+  amount: number,
+  category: string,
+  date: string,
+  isIncome: boolean,
+  userId: string
+}
+

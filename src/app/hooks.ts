@@ -5,6 +5,11 @@ import { RootState } from '../types';
 
 export const useAuth = () =>{
   const userAuth: boolean = useSelector((state: RootState) => state.auth.isAuth);
+
+  if(localStorage.getItem("isAuth") === 'true'){
+    return true;
+  }
+
   return userAuth;
 }
 

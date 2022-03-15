@@ -24,6 +24,11 @@ export const Login: React.FunctionComponent = () => {
         dispatch(setLogIn({
           isAuth: true
         }));
+
+        localStorage.setItem("email", `${user.email}`)
+        localStorage.setItem("id", `${user.uid}`)
+        localStorage.setItem("isAuth", "true")
+
         navigate('/')
       })
       .catch(() => {setErrorText(errorText = "Incorrect email or password")})

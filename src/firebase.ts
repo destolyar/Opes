@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc, getDocs, setDoc, doc, updateDoc, arrayRemove, arrayUnion, query, where } from 'firebase/firestore';
-import { User } from "./types";
+import { getFirestore, collection, getDocs, setDoc, doc, arrayUnion, query, where, CollectionReference, DocumentData, Query, addDoc } from 'firebase/firestore';
+import { WalletCard } from "./types";
 
 
 const firebaseConfig = {
@@ -27,34 +27,19 @@ export default class FirestoreActions {
     const docs = await getDocs(collection(db, "Users")) 
     docs.forEach((i) => console.log(i.data()))
   }
-  async addCard() {
+  async addCard(amount: number, date: string, category: string, isIcome: boolean) {
     try {
-          let userRef = collection(db, "users");
-          const oldObjectQuery =  query(userRef, where("userId", "==", `${this.id}`))
+      const walletCardsRef: CollectionReference<DocumentData> = collection(db, "walletCards")
+      const data: WalletCard = {
+        amount: amount,
+        category: category,
+        date: date,
+        isIncome: isIcome,
+        userId: this.id
+      }
 
-          let oldObject: any = await getDocs(oldObjectQuery)
-          oldObject.forEach((doc: any) => {
-            oldObject = doc.data()
-          })
-          oldObject = oldObject.wallet.cards
-          
-          const lengthOfOldObject = (oldObject.length === 0) ? 0 : oldObject.length;
+      addDoc(walletCardsRef, data)
 
-          const newObject = {
-            id: lengthOfOldObject + '' + Math.round(Math.random() * 1000000),
-            amount: 423,
-            date: '3.12.2021',
-            category: 'new category'
-          }
-
-          setDoc(doc(db, `users/${this.id}`), {
-            userId: this.id,
-            wallet: {
-              cards: arrayUnion(...oldObject, newObject),
-              allCategories: [],
-              allDates: [],
-            }
-          })
     } catch (e) {
       console.error("Error adding document: ", e);
     }
