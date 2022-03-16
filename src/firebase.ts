@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, getDocs, setDoc, doc, arrayUnion, query, where, CollectionReference, DocumentData, Query, addDoc } from 'firebase/firestore';
-import { WalletCard } from "./types";
+import { getFirestore, collection, getDocs, setDoc, doc, arrayUnion, query, where, CollectionReference, DocumentData, Query, addDoc, deleteDoc } from 'firebase/firestore';
+import { WalletCardInfo } from "./types";
 
 
 const firebaseConfig = {
@@ -23,20 +23,28 @@ export default class FirestoreActions {
   constructor(id: string) {
     this.id = id;
   }
+
   async getWalletCards() {
     const walletCardsRef = collection(db, "walletCards");
     const cardsRef = query(walletCardsRef, where("userId", "==", `${this.id}`))
     const cardsSnapshot = await getDocs(cardsRef)
 
-    cardsSnapshot.forEach((i) => console.log(i.data()))
+    let cards: WalletCardInfo[] = []; 
+    cardsSnapshot.forEach((i: DocumentData) => {
+      const card: WalletCardInfo = i["data"]()
+      cards.push(card)
+    })
+
+    return cards;
   }
-  addWalletCard(walletCardInfo: WalletCard) {
+  addWalletCard(walletCardInfo: WalletCardInfo) {
     try {
       const walletCardsRef: CollectionReference<DocumentData> = collection(db, "walletCards")
-      const data: WalletCard = {
+      const data: WalletCardInfo = {
         amount: walletCardInfo.amount,
         category: walletCardInfo.category,
         date: walletCardInfo.date,
+        dateAdded: walletCardInfo.dateAdded,
         isIncome: walletCardInfo.isIncome,
         userId: this.id
       }
@@ -46,5 +54,11 @@ export default class FirestoreActions {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  }
+
+  async deleteCard(WalletCardInfo: WalletCardInfo) {
+    const walletCardsRef = collection(db, "walletCards");
+    const cardsRef = query(walletCardsRef, where("userId", "==", `${this.id}`))
+    await deleteDoc(doc(db, "walletCards", "DC"))
   }
 }

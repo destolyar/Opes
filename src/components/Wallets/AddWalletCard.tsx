@@ -3,6 +3,7 @@ import { animated, useSpring } from "react-spring";
 import Utils from "../../Utils";
 import FirestoreActions from "../../firebase";
 import { addWalletFormProps } from "../../types";
+import moment from "moment";
 
 export const AddWalletCard: React.FunctionComponent<addWalletFormProps> = (props) => {
   let [incomePicked, setIncomePicked] = useState<boolean>(false)
@@ -31,9 +32,26 @@ export const AddWalletCard: React.FunctionComponent<addWalletFormProps> = (props
     setIsIncome(isIncome = false)
   }
 
+  const getCards = async () => {
+    const cards = await db.getWalletCards();
+    props.setCards(cards)
+    props.setLastTenCards(cards.reverse().slice(0, 9))
+  }
+
+  const addCard = () => {
+    db.addWalletCard(
+      { amount: Number(amount),
+        category: category,
+        date: date,
+        dateAdded: `${moment().format('MMMM Do YYYY, h:mm:ss a')}`,
+        isIncome: !isIncome,
+        userId: userId 
+      })
+    getCards()
+  }
+
   const formDisplayAnimation = useSpring({
-    immediate: true,
-    reset: true,
+    reset: false,
     to: { opacity: 1, transform: 'translateY(0)'},
     from: {opacity: 0, transform: 'translateY(-100%)'},
     config: {
@@ -53,22 +71,15 @@ export const AddWalletCard: React.FunctionComponent<addWalletFormProps> = (props
         <input className='wallets__add-data-window-container__form__category' type="text" placeholder="Category" onChange={(e) => setCategory(e.target.value)}/>
         <input className='wallets__add-data-window-container__form__date' type="date" onChange={(e) => setDate(e.target.value)}/>
         <div className='wallets__add-data-window-container__form__collection-expenses'>
-          <button className='wallets__add-data-window-container__form__collection-expenses__income' style={(incomePicked) ? {backgroundColor: 'rgba(109,95,253, 0.5)'} : {backgroundColor: 'rgb(12, 202, 12)'}} 
+          <button className='wallets__add-data-window-container__form__collection-expenses__income' style={(incomePicked) ? {backgroundColor: 'rgba(109,95,253, 0.5)'} : {backgroundColor: 'rgb(253, 60, 60)'}} 
           onClick={(e) => changeExpensButtonBackground(e)}>Expens</button>
-          <button className='wallets__add-data-window-container__form__collection-expenses__expens' style={(expensPicked) ? {backgroundColor: 'rgba(109,95,253, 0.5)'} : {backgroundColor: 'rgb(253, 60, 60)'}}
+          <button className='wallets__add-data-window-container__form__collection-expenses__expens' style={(expensPicked) ? {backgroundColor: 'rgba(109,95,253, 0.5)'} : {backgroundColor: 'rgb(12, 202, 12)'}}
           onClick={(e) => changeIncomeButtonBackground(e)}>Income</button>
         </div>
         <p className="wallets__add-data-window-container__form__error" style={(error) ? {display: "block"} : {display: "none"}}>Incorrect data</p>
         <button className="wallets__add-data-window-container__form__confirm" onClick={() => 
         {
-          (Utils.getWalletCardInfoValid(Number(amount), category, date)) ?
-          db.addWalletCard(
-            { amount: Number(amount),
-              category: category,
-              date: date,
-              isIncome: !isIncome,
-              userId: userId 
-            }) : setError(true)
+          (Utils.getWalletCardInfoValid(Number(amount), category, date)) ? addCard() : setError(true)
         }}>Add</button>
       </div>
     </animated.div>

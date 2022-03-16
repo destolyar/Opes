@@ -21,12 +21,119 @@
     &__button {
       @include history-button;
     }
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 11;
+      background-color: black;
+
+      &__close {
+        width: 40px;
+        height: 40px;
+        background-color: white;
+      }
+
+      &__title {
+        @include title;
+      }
+
+      &__items {
+        display: grid;
+      }
+    }
   }
 
   &__balance {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &__value {
+      @include title;
+    }
+  }
+
+  &__last-transactions {
+    overflow: auto;
+    margin-top: 30px;
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    @include desktop {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+    }
+
+    @include tablets {
+      grid-template-columns: 1fr;
+    }
+
+    &__card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin: 0 auto;
+      width: 300px;
+      height: 150px;
+      border-radius: 20px;
+      padding: 20px;
+      background-color: $form-background-color;
+
+      &:hover {
+        @include default-hover;
+      }
+
+      &__amount {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+
+        &__text {
+          @include subtitle;
+        }
+      }
+
+      &__info {
+
+        &__text {
+          @include description;
+        }
+      }
+
+      &__delete-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: absolute;
+        top: auto;
+        left: 0;
+        padding: 0 30px;
+        border-radius: 20px;
+        transition: 0.5s;
+
+        &__text {
+          @include title;
+          color: $secondary-button-text-color;
+        }
+
+        &__button {
+          @include delete-card-button;
+        }
+      }
+    }
   }
 
   &__add-data-window-container {

@@ -1,32 +1,50 @@
 import '../../styles/components/wallets.scss'
 import Utils from '../../Utils'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AddWalletCard } from './AddWalletCard'
+import { AllWalletCards } from './AllWalletCards'
 import FirestoreActions from '../../firebase'
+import { WalletCardInfo } from '../../types'
+import { WalletCard } from './WalletCard'
 
 export const Wallets: React.FunctionComponent = () => {
-  let partOfDay: string | undefined = Utils.getPartOfDay()
+  let partOfDay: string | undefined = Utils.getPartOfDay();
 
-  let [formDisplay, setFormDisplay] = useState<boolean>(false)
+  let [formDisplay, setFormDisplay] = useState<boolean>(false);
+  let [historyDisplay, setHistoryDisplay] = useState<boolean>(false);
 
-  const userId: string = localStorage.getItem('id') || ''
+  const userId: string = localStorage.getItem('id') || '';
   const db: FirestoreActions = new FirestoreActions(userId);
 
-  db.getWalletCards()
+  let [cards, setCards] = useState<WalletCardInfo[]>([]);
+  let [lastTenCards, setLastTenCards] = useState<WalletCardInfo[]>([])
+
+  useEffect(() => {
+    const getCards = async () => {
+      cards = await db.getWalletCards();
+      setCards(cards)
+      setLastTenCards(lastTenCards = cards.reverse().slice(0, 9))
+    }
+    getCards()
+  }, [])
+
   
   return(
     <section className="wallets">
       <div className='wallets__history'>
         <h1 className='wallets__history__title'>Good {partOfDay}!</h1>
-        <button className='wallets__history__button'><img src="./icons/history.png" alt="" /></button>
+        <button className='wallets__history__button' onClick={() => setHistoryDisplay(true)}>
+          <img src="./icons/history.png" alt=""/>
+        </button>
       </div>
       <div className='wallets__balance'>
-        <h1>123124</h1>  
+        <h1 className='wallets__balance__value'>Balance: 123124</h1>
       </div>
       <div className='wallets__last-transactions'>
-
+        {lastTenCards.map((i) => {return <WalletCard info={i}/>})}
       </div>
-      <AddWalletCard formDisplay={formDisplay} changeFormDisplay={setFormDisplay}/>
+      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay}/>
+      <AddWalletCard formDisplay={formDisplay} changeFormDisplay={setFormDisplay} setCards={setCards} setLastTenCards={setLastTenCards}/>
       <button className='wallets__add-data-button' onClick={() => setFormDisplay(true)}>
         <div className='wallets__add-data-button__plus'>
           <div className='wallets__add-data-button__plus__vertical-line'></div>

@@ -22,7 +22,9 @@ export interface FormProps {
 
 export interface addWalletFormProps {
   formDisplay: boolean,
-  changeFormDisplay: Dispatch<SetStateAction<boolean>>
+  changeFormDisplay: Dispatch<SetStateAction<boolean>>,
+  setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
+  setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
 }
 
 export interface User {
@@ -32,16 +34,25 @@ export interface User {
 
 export interface Wallet {
   balance: number,
-  cards: WalletCard[],
+  cards: WalletCardInfo[],
   categories: string[],
   dates: string[]
 }
 
-export interface WalletCard {
+export interface WalletCardInfo {
   amount: number | undefined,
   category: string | undefined,
   date: string | undefined,
+  dateAdded: string,
   isIncome: boolean | undefined,
   userId?: string
 }
 
+export interface WalletCardInfoProps {
+  info: WalletCardInfo
+}
+
+export interface AllWalletCardsProps {
+  historyDisplay: boolean,
+  setHistoryDisplay: Dispatch<SetStateAction<boolean>>
+}

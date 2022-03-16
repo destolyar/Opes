@@ -84,7 +84,7 @@ body {
 
 // Устанавливаем адаптивные паддинги
 
-.wallets, .stocks, .passive, .home {
+.wallets, .stocks, .passive, .home, .wallets__history__container {
   padding: 80px;
 
   @include desktop {
