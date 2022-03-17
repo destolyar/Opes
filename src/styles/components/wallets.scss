@@ -134,6 +134,10 @@
         @include default-hover;
       }
 
+      @include phones {
+        width: 260px;
+      }
+
       &__amount {
         display: flex;
         align-items: center;

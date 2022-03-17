@@ -15,6 +15,10 @@
     width: 350px;
   }
 
+  @include phones {
+    width: 300px;
+  }
+
   &:hover {
     @include default-hover;
     background-color: $primary-button-hover-color;
