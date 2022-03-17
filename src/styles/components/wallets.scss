@@ -16,6 +16,7 @@
 
     &__title {
       @include title;
+      color: $secondary-text-color;
     }
 
     &__button {
@@ -95,6 +96,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
 
     &__value {
       @include title;
@@ -248,10 +250,6 @@
   
     @include laptop {
       bottom: 40px;
-    }
-  
-    @include tablets {
-      bottom: 100px;
     }
 
     @include add-data-button;
