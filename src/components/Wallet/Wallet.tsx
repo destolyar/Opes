@@ -7,7 +7,7 @@ import FirestoreActions from '../../firebase'
 import { WalletCardInfo } from '../../types'
 import { WalletCard } from './WalletCard'
 
-export const Wallets: React.FunctionComponent = () => {
+export const Wallet: React.FunctionComponent = () => {
   let partOfDay: string | undefined = Utils.getPartOfDay();
 
   let [formDisplay, setFormDisplay] = useState<boolean>(false);
@@ -41,9 +41,9 @@ export const Wallets: React.FunctionComponent = () => {
         <h1 className='wallets__balance__value'>Balance: 123124</h1>
       </div>
       <div className='wallets__last-transactions'>
-        {lastTenCards.map((i) => {return <WalletCard info={i}/>})}
+        {lastTenCards.map((i) => {return <WalletCard info={i} setCards={setCards} setLastTenCards={setLastTenCards}/>})}
       </div>
-      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay} cards={cards}/>
+      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay} cards={cards} setCards={setCards} setLastTenCards={setLastTenCards}/>
       <AddWalletCard formDisplay={formDisplay} changeFormDisplay={setFormDisplay} setCards={setCards} setLastTenCards={setLastTenCards}/>
       <button className='wallets__add-data-button' onClick={() => setFormDisplay(true)}>
         <div className='wallets__add-data-button__plus'>

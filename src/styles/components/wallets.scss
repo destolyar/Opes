@@ -75,8 +75,18 @@
         display: grid;
         overflow-y: scroll;
         width: 100%;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        margin-top: 40px;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 40px;
+
+        @include desktop {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        @include tablets {
+          grid-template-columns: 1fr;
+        }
+        
       }
     }
   }

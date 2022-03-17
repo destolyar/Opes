@@ -10,7 +10,7 @@ export const Home: React.FunctionComponent = () => {
   
   return(
     <section className="home">
-      <h1>Home</h1>
+      <h1>Home(in progress)</h1>
       <button onClick={() => {
         localStorage.clear();
         dispatch(removeUser())
@@ -18,6 +18,7 @@ export const Home: React.FunctionComponent = () => {
           isAuth: false
         }))
         navigate('/')
+        window.location.reload()
       }}>Log out</button>
     </section>
   )

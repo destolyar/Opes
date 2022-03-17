@@ -30,7 +30,7 @@ export const Register: React.FunctionComponent = () => {
         localStorage.setItem("id", `${user.uid}`)
         localStorage.setItem("isAuth", "true")
 
-        navigate('/')
+        navigate('/wallet')
       })
       .catch(() => {setErrorText(errorText = "Something went wrong. Please try again.")})
   }

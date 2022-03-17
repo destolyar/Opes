@@ -4,13 +4,14 @@ import { AllWalletCardsProps } from "../../types"
 
 export const AllWalletCards: React.FunctionComponent<AllWalletCardsProps> = (props) => {
   const formDisplayAnimation = useSpring({
-    reset: true,
+    reset: false,
     to: { opacity: 1, transform: 'translateX(0)'},
     from: {opacity: 0, transform: 'translateX(100%)'},
     config: {
       duration: 500}
   });
 
+  
   return(
     <animated.section style={(props.historyDisplay) ? formDisplayAnimation : {display: 'none'}} className="wallets__history__container">
       <div className="wallets__history__container__close-container" onClick={() => props.setHistoryDisplay(false)}>
@@ -21,7 +22,7 @@ export const AllWalletCards: React.FunctionComponent<AllWalletCardsProps> = (pro
       </div>
       <h1 className="wallets__history__container__title">All Items</h1>
       <div className="wallets__history__container__items">
-        {props.cards.map((i) => {return <WalletCard info={i}/>})}
+        {props.cards.map((i) => {return <WalletCard info={i} setCards={props.setCards} setLastTenCards={props.setLastTenCards}/>})}
       </div>
     </animated.section>
   )

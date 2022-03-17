@@ -45,15 +45,20 @@ export interface WalletCardInfo {
   date: string | undefined,
   dateAdded: string,
   isIncome: boolean | undefined,
+  docId: string,
   userId?: string
 }
 
 export interface WalletCardInfoProps {
-  info: WalletCardInfo
+  info: WalletCardInfo,
+  setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
+  setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
 }
 
 export interface AllWalletCardsProps {
   cards: WalletCardInfo[],
   historyDisplay: boolean,
-  setHistoryDisplay: Dispatch<SetStateAction<boolean>>
+  setHistoryDisplay: Dispatch<SetStateAction<boolean>>,
+  setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
+  setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
 }

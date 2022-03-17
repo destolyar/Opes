@@ -5,7 +5,7 @@ import { Home } from './components/Home/Home';
 import { Layout } from './components/Layout';
 import { useAuth } from './app/hooks'
 import { Passive } from './components/Passive/Passive';
-import { Wallets } from './components/Wallets/Wallets';
+import { Wallet } from './components/Wallet/Wallet';
 import { Stocks } from './components/Stocks/Stocks';
 
 const App: React.FunctionComponent = () => {
@@ -17,7 +17,7 @@ const App: React.FunctionComponent = () => {
         <Route index element={(userAuth) ? <Home/> : <Navigate to={'/login'}/>}></Route>
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/register' element={<Register/>}></Route>
-        <Route path='/wallets' element={<Wallets/>}></Route>
+        <Route path='/wallet' element={<Wallet/>}></Route>
         <Route path='/stocks' element={<Stocks/>}></Route>
         <Route path='/passive' element={<Passive/>}></Route>
       </Route>

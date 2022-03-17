@@ -44,6 +44,7 @@ export const AddWalletCard: React.FunctionComponent<addWalletFormProps> = (props
         category: category,
         date: date,
         dateAdded: `${moment().format('MMMM Do YYYY, h:mm:ss a')}`,
+        docId: "",
         isIncome: !isIncome,
         userId: userId 
       })
