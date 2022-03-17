@@ -12,18 +12,19 @@ export const Wallet: React.FunctionComponent = () => {
 
   let [formDisplay, setFormDisplay] = useState<boolean>(false);
   let [historyDisplay, setHistoryDisplay] = useState<boolean>(false);
+  let [balance, setBalance] = useState<number>(0)
+  let [cards, setCards] = useState<WalletCardInfo[]>([]);
+  let [lastTenCards, setLastTenCards] = useState<WalletCardInfo[]>([])
 
   const userId: string = localStorage.getItem('id') || '';
   const db: FirestoreActions = new FirestoreActions(userId);
-
-  let [cards, setCards] = useState<WalletCardInfo[]>([]);
-  let [lastTenCards, setLastTenCards] = useState<WalletCardInfo[]>([])
 
   useEffect(() => {
     const getCards = async () => {
       cards = await db.getWalletCards();
       setCards(Utils.sortByDate(cards))
-      setLastTenCards(lastTenCards = cards.slice(0, 9))
+      setLastTenCards(lastTenCards = cards.reverse().slice(0, 9))
+      setBalance(Utils.getBalance(cards))
     }
     getCards()
   }, [])
@@ -38,13 +39,14 @@ export const Wallet: React.FunctionComponent = () => {
         </button>
       </div>
       <div className='wallets__balance'>
-        <h1 className='wallets__balance__value'>Balance: 123124</h1>
+        <h1 className='wallets__balance__value'>Balance: {balance}$</h1>
       </div>
       <div className='wallets__last-transactions'>
-        {lastTenCards.map((i) => {return <WalletCard info={i} setCards={setCards} setLastTenCards={setLastTenCards}/>})}
+        {lastTenCards.map((i) => {return <WalletCard info={i} setCards={setCards} setLastTenCards={setLastTenCards} key={i.docId} setBalance={setBalance}/>})}
       </div>
-      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay} cards={cards} setCards={setCards} setLastTenCards={setLastTenCards}/>
-      <AddWalletCard formDisplay={formDisplay} changeFormDisplay={setFormDisplay} setCards={setCards} setLastTenCards={setLastTenCards}/>
+      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay} cards={cards} setCards={setCards} 
+      setLastTenCards={setLastTenCards} setBalance={setBalance}/>
+      <AddWalletCard formDisplay={formDisplay} changeFormDisplay={setFormDisplay} setCards={setCards} setLastTenCards={setLastTenCards} setBalance={setBalance}/>
       <button className='wallets__add-data-button' onClick={() => setFormDisplay(true)}>
         <div className='wallets__add-data-button__plus'>
           <div className='wallets__add-data-button__plus__vertical-line'></div>

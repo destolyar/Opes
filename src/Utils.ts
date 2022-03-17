@@ -33,4 +33,17 @@ export default class Utils {
 
     return cards;
   }
+
+  public static getBalance(cards: WalletCardInfo[]) {
+    let positiveNumbers: number = 0
+    let negativeNumbers: number = 0
+
+    cards.forEach((i) => {
+      if(i.amount !== undefined) {
+        (i.isIncome) ? positiveNumbers += i.amount : negativeNumbers += i.amount
+      }
+    })
+
+    return positiveNumbers - negativeNumbers
+  }
 }

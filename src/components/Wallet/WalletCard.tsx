@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FirestoreActions from "../../firebase";
 import { WalletCardInfoProps } from "../../types"
+import Utils from "../../Utils";
 
 export const WalletCard: React.FunctionComponent<WalletCardInfoProps> = (props) => {
   const background: string = (props.info.isIncome) ? "rgba(12, 202, 12, 0.5)" : "rgba(253, 60, 60, 0.5)"
@@ -15,10 +16,14 @@ export const WalletCard: React.FunctionComponent<WalletCardInfoProps> = (props) 
     const cards = await db.getWalletCards();
     props.setCards(cards)
     props.setLastTenCards(cards.reverse().slice(0, 9))
+    props.setBalance(Utils.getBalance(cards))
   }
 
   const deleteCard = () => {
     db.deleteCard(props.info.docId)
+    if(props.setAllWalletCardsAnimationOn !== undefined) {
+      props.setAllWalletCardsAnimationOn(false)
+    }
     getCards()
   }
 

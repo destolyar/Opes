@@ -25,6 +25,7 @@ export interface addWalletFormProps {
   changeFormDisplay: Dispatch<SetStateAction<boolean>>,
   setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
   setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
+  setBalance: Dispatch<SetStateAction<number>>
 }
 
 export interface User {
@@ -53,6 +54,8 @@ export interface WalletCardInfoProps {
   info: WalletCardInfo,
   setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
   setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
+  setAllWalletCardsAnimationOn?: Dispatch<SetStateAction<boolean>>,
+  setBalance: Dispatch<SetStateAction<number>>
 }
 
 export interface AllWalletCardsProps {
@@ -61,4 +64,5 @@ export interface AllWalletCardsProps {
   setHistoryDisplay: Dispatch<SetStateAction<boolean>>,
   setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
   setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
+  setBalance: Dispatch<SetStateAction<number>>
 }
