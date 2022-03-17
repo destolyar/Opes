@@ -53,6 +53,7 @@ export interface WalletCardInfoProps {
 }
 
 export interface AllWalletCardsProps {
+  cards: WalletCardInfo[],
   historyDisplay: boolean,
   setHistoryDisplay: Dispatch<SetStateAction<boolean>>
 }

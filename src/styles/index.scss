@@ -82,7 +82,13 @@ body {
   overflow: hidden;
 }
 
-// Устанавливаем адаптивные паддинги
+// hide scrollbars
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+// set adaptive padding's
 
 .wallets, .stocks, .passive, .home, .wallets__history__container {
   padding: 80px;

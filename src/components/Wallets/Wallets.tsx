@@ -22,8 +22,8 @@ export const Wallets: React.FunctionComponent = () => {
   useEffect(() => {
     const getCards = async () => {
       cards = await db.getWalletCards();
-      setCards(cards)
-      setLastTenCards(lastTenCards = cards.reverse().slice(0, 9))
+      setCards(Utils.sortByDate(cards))
+      setLastTenCards(lastTenCards = cards.slice(0, 9))
     }
     getCards()
   }, [])
@@ -43,7 +43,7 @@ export const Wallets: React.FunctionComponent = () => {
       <div className='wallets__last-transactions'>
         {lastTenCards.map((i) => {return <WalletCard info={i}/>})}
       </div>
-      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay}/>
+      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay} cards={cards}/>
       <AddWalletCard formDisplay={formDisplay} changeFormDisplay={setFormDisplay} setCards={setCards} setLastTenCards={setLastTenCards}/>
       <button className='wallets__add-data-button' onClick={() => setFormDisplay(true)}>
         <div className='wallets__add-data-button__plus'>

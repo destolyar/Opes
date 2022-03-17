@@ -32,20 +32,51 @@
       width: 100vw;
       height: 100vh;
       z-index: 11;
-      background-color: black;
+      background-color: $all-cards-background;
 
-      &__close {
-        width: 40px;
-        height: 40px;
-        background-color: white;
+      &__close-container {
+        margin-left: auto;
+        &__close {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          width: 40px;
+          height: 40px;
+          
+          &:hover {
+            @include default-hover;
+            transition: 1s;
+            transform: rotate(360deg) scale(1.5);
+          }
+
+          &__first-line, &__second-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: $add-data-line-color
+          }
+          &__first-line {
+            transform: rotate(45deg)
+          }
+  
+          &__second-line {
+            transform: rotate(-45deg)
+          }
+        }
       }
 
       &__title {
         @include title;
+        color: $third-text-color;
       }
 
       &__items {
         display: grid;
+        overflow-y: scroll;
+        width: 100%;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 40px;
       }
     }
   }

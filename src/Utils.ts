@@ -1,9 +1,6 @@
-export default class Utils {
-  // 6 - 12 Morning
-  // 12 - 18 Afternoon
-  // 18 - 23 evening
-  // 23 - 6 night
+import { WalletCardInfo } from "./types";
 
+export default class Utils {
   public static getPartOfDay() {
     let currentDate = new Date().getHours();
     
@@ -25,5 +22,15 @@ export default class Utils {
       return false
     }
     return true
+  }
+
+  public static sortByDate(cards: WalletCardInfo[]) {
+    //transform date string in number by which we sort the list
+
+    cards.sort((a: WalletCardInfo, b: WalletCardInfo) => {
+      return Number(b.date?.replace(/-/gi, '')) - Number(a.date?.replace(/-/gi, ''));
+    })
+
+    return cards;
   }
 }
