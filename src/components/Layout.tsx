@@ -25,7 +25,7 @@ export const Layout: React.FunctionComponent = () => {
         <Link className='layout__navbar__item' to="/stocks">
           <img src="./icons/stocks.png" alt="" />
         </Link>
-        <Link className='layout__navbar__item' to="/wallets">
+        <Link className='layout__navbar__item' to="/wallet">
           <img src="./icons/wallet.png" alt="" /></Link>
         <Link className='layout__navbar__item' to="/passive">
           <img src="./icons/car.png" alt="" />

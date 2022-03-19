@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc, getDocs, setDoc, doc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
-import { User } from "./types";
+import { getFirestore, collection, getDocs, query, where, CollectionReference, DocumentData, addDoc, deleteDoc, doc, setDoc, DocumentReference } from 'firebase/firestore';
+import { WalletCardInfo } from "./types";
 
 
 const firebaseConfig = {
@@ -23,51 +23,46 @@ export default class FirestoreActions {
   constructor(id: string) {
     this.id = id;
   }
-  async displayData() {
-    const docs = await getDocs(collection(db, "Users")) 
-    docs.forEach((i) => console.log(i.data()))
+
+  async getWalletCards() {
+    const walletCardsRef = collection(db, "walletCards");
+    const cardsRef = query(walletCardsRef, where("userId", "==", `${this.id}`))
+    const cardsSnapshot = await getDocs(cardsRef)
+
+    let cards: WalletCardInfo[] = []; 
+    cardsSnapshot.forEach((i: DocumentData) => {
+      const card: WalletCardInfo = i["data"]()
+      cards.push(card)
+    })
+
+    return cards;
   }
-  async addCard() {
+  async addWalletCard(walletCardInfo: WalletCardInfo) {
     try {
-      let arrayOfUsers: User | any = []
-      const userRef = collection(db, 'users')
+      const walletCardsRef: CollectionReference<DocumentData> = collection(db, "walletCards")
+      const data: WalletCardInfo = {
+        amount: walletCardInfo.amount,
+        category: walletCardInfo.category,
+        date: walletCardInfo.date,
+        dateAdded: walletCardInfo.dateAdded,
+        isIncome: walletCardInfo.isIncome,
+        docId: walletCardsRef.id,
+        userId: this.id
+      }
 
-      const oldObject = await getDocs(userRef)
-      oldObject.forEach((i) => arrayOfUsers.push(i.data()))
+      const docRef: DocumentReference<DocumentData> = await addDoc(walletCardsRef, data)
+      setDoc(doc(walletCardsRef, docRef.id), {
+        docId: docRef.id
+      }, {merge: true})
 
-      arrayOfUsers.forEach((i:any) => {
-        let userId: string;
-        if(i.userId !== undefined) {
-          userId = i.userId.split(' ')[0]
-        } else {
-          userId = ''
-        }
-        if(userId === this.id) {
-          console.log('we in')
-          const oldObject = i.wallet.cards;
-          const lengthOfOldObject = (oldObject.length === 0) ? 0 : oldObject.length;
-          
-          console.log(lengthOfOldObject)
-
-          const newObject = {
-            id: lengthOfOldObject + '' + Math.round(Math.random() * 1000000),
-            amount: 423,
-            date: '3.12.2021',
-            category: 'new category'
-          }
-
-          setDoc(doc(db, `users/${this.id}`), {
-            userId: this.id,
-            wallet: {
-              cards: arrayUnion(...oldObject, newObject),
-              allCategories: [],
-              allDates: [],
-            }
-          })
-        }
-      })
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  }
+
+  async deleteCard(docId: string) {
+    const walletCardsRef: CollectionReference<DocumentData> = collection(db, "walletCards");
+    
+    deleteDoc(doc(walletCardsRef, docId))
   }
 }

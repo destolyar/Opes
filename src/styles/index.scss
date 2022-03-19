@@ -36,6 +36,7 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  overflow: hidden;
 }
 
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
@@ -78,20 +79,15 @@ select {
   }
 }
 
-body {
-  overflow: hidden;
+// hide scrollbars
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
-input[type="text"] {
-  font-family: inherit; /* 1 */
-  font-size: inherit; /* 1 */
-  line-height: inherit; /* 1 */
-  margin: 0; /* 2 */
-}
+// set adaptive padding's
 
-// Устанавливаем адаптивные паддинги
-
-.wallets, .stocks, .passive, .home {
+.wallets, .stocks, .passive, .home, .wallets__history__container {
   padding: 80px;
 
   @include desktop {
@@ -105,4 +101,8 @@ input[type="text"] {
   @include tablets {
     padding: 30px;
   }
+}
+
+.wallets, .wallets__history__container {
+  padding-bottom: 0;
 }

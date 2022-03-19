@@ -1,9 +1,6 @@
-export default class Utils {
-  // 6 - 12 Morning
-  // 12 - 18 Afternoon
-  // 18 - 23 evening
-  // 23 - 6 night
+import { WalletCardInfo } from "./types";
 
+export default class Utils {
   public static getPartOfDay() {
     let currentDate = new Date().getHours();
     
@@ -18,5 +15,35 @@ export default class Utils {
     } else {
       return 'Night';
     }
+  }
+
+  public static getWalletCardInfoValid = (amount: number | undefined, category: string | undefined, date: string | undefined): boolean => {
+    if(category === undefined || date === undefined || amount === undefined) {
+      return false
+    }
+    return true
+  }
+
+  public static sortByDate(cards: WalletCardInfo[]) {
+    //transform date string in number by which we sort the list
+
+    cards.sort((a: WalletCardInfo, b: WalletCardInfo) => {
+      return Number(b.date?.replace(/-/gi, '')) - Number(a.date?.replace(/-/gi, ''));
+    })
+
+    return cards;
+  }
+
+  public static getBalance(cards: WalletCardInfo[]) {
+    let positiveNumbers: number = 0
+    let negativeNumbers: number = 0
+
+    cards.forEach((i) => {
+      if(i.amount !== undefined) {
+        (i.isIncome) ? positiveNumbers += i.amount : negativeNumbers += i.amount
+      }
+    })
+
+    return positiveNumbers - negativeNumbers
   }
 }

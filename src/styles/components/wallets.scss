@@ -16,10 +16,80 @@
 
     &__title {
       @include title;
+      color: $secondary-text-color;
     }
 
     &__button {
       @include history-button;
+    }
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 11;
+      background-color: $all-cards-background;
+
+      &__close-container {
+        margin-left: auto;
+        &__close {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          width: 40px;
+          height: 40px;
+          
+          &:hover {
+            @include default-hover;
+            transition: 1s;
+            transform: rotate(360deg) scale(1.5);
+          }
+
+          &__first-line, &__second-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: $add-data-line-color
+          }
+          &__first-line {
+            transform: rotate(45deg)
+          }
+  
+          &__second-line {
+            transform: rotate(-45deg)
+          }
+        }
+      }
+
+      &__title {
+        @include title;
+        color: $third-text-color;
+      }
+
+      &__items {
+        display: grid;
+        overflow-y: scroll;
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 30px;
+
+        @include desktop {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        @include tablets {
+          grid-template-columns: 1fr;
+        }
+        
+      }
     }
   }
 
@@ -27,10 +97,98 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
+
+    &__value {
+      @include title;
+    }
+  }
+
+  &__last-transactions {
+    overflow: auto;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    @include desktop {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+    }
+
+    @include tablets {
+      grid-template-columns: 1fr;
+    }
+
+    &__card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin: 0 auto;
+      width: 300px;
+      height: 150px;
+      border-radius: 20px;
+      padding: 20px;
+      background-color: $form-background-color;
+
+      &:hover {
+        @include default-hover;
+      }
+
+      @include phones {
+        width: 260px;
+      }
+
+      &__amount {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+
+        &__text {
+          @include subtitle;
+        }
+      }
+
+      &__info {
+
+        &__text {
+          @include description;
+        }
+      }
+
+      &__delete-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: absolute;
+        top: auto;
+        left: 0;
+        padding: 0 30px;
+        border-radius: 20px;
+        transition: 0.5s;
+
+        &__text {
+          @include title;
+          color: $secondary-button-text-color;
+        }
+
+        &__button {
+          @include delete-card-button;
+        }
+      }
+    }
   }
 
   &__add-data-window-container {
     display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     left: 0;
     top: 0;
@@ -41,12 +199,45 @@
     z-index: 1;
 
     &__form {
-      width: 100%;
-      height: 100%;
+      background-color: $form-background-color;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 30px;
+      border-radius: 20px;
       flex-direction: column;
+
+      &__amount, &__category, &__date {
+        @include default-input;
+      }
+
+      &__collection-expenses {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        &__income, &__expens {
+          flex: 1 1;
+          margin: 0 10px;
+          @include collection-expenses-buttons;
+        }
+
+        &__income {
+          background-color: $income-button-background-color;
+        }
+
+        &__expens {
+          background-color: $expens-button-background-color;
+        }
+      }
+      
+      &__error {
+        @include description;
+        color: $error-color;
+      }
+
+      &__confirm {
+        margin-top: 20px;
+        @include add-wallet-card-button;
+      }
     }
   }
 
@@ -55,6 +246,8 @@
     bottom: 80px;
     z-index: 0;
 
+    @include add-data-button;
+
     @include desktop {
       bottom: 60px;
     }
@@ -62,13 +255,11 @@
     @include laptop {
       bottom: 40px;
     }
-  
+
     @include tablets {
       bottom: 100px;
     }
-
-    @include add-data-button;
-
+    
     &__plus {
       position: relative;
 

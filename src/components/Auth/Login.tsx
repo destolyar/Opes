@@ -7,14 +7,17 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { setUser } from '../../app/slices/userSlice';
 import { setLogIn } from '../../app/slices/authSlice';
 import { useState } from 'react';
+import { authAnimationSettings } from '../../animationsSettings';
 
 export const Login: React.FunctionComponent = () => {
+  let [errorText, setErrorText] = useState<string>('');
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let [errorText, setErrorText] = useState<string>('');
 
   const handleLogin = (email: string, password: string): void => {
     const auth = getAuth();
+    
     signInWithEmailAndPassword(auth, email, password)
       .then(({user}) => {
         dispatch(setUser({
@@ -24,16 +27,17 @@ export const Login: React.FunctionComponent = () => {
         dispatch(setLogIn({
           isAuth: true
         }));
-        navigate('/')
+
+        localStorage.setItem("email", `${user.email}`)
+        localStorage.setItem("id", `${user.uid}`)
+        localStorage.setItem("isAuth", "true")
+
+        navigate('/wallet')
       })
       .catch(() => {setErrorText(errorText = "Incorrect email or password")})
   }
 
-  const textDisplay = useSpring({
-    to: { opacity: 1 },
-    from: { opacity: 0 },
-    config: {duration: 5000}
-  })
+  const textDisplay = useSpring(authAnimationSettings)
 
   return(
     <section className='login'>
