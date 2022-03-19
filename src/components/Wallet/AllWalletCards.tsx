@@ -2,18 +2,13 @@ import { animated, useSpring } from "react-spring";
 import { WalletCard } from './WalletCard';
 import { AllWalletCardsProps } from "../../types"
 import { useState } from "react";
+import { allWalletCardsAnimationSettings } from "../../animationsSettings";
 
 export const AllWalletCards: React.FunctionComponent<AllWalletCardsProps> = (props) => {
 
-  let [allWalletCardsAnimationOn, setAllWalletCardsAnimationOn] = useState<boolean>(true)
+  let [windowAnimationOn, setAllWalletCardsAnimationOn] = useState<boolean>(true)
   
-  const formDisplayAnimation = useSpring({
-    reset: allWalletCardsAnimationOn,
-    to: { opacity: 1, transform: 'translateX(0)'},
-    from: {opacity: 0, transform: 'translateX(100%)'},
-    config: {
-      duration: 500}
-  });
+  const formDisplayAnimation = useSpring(allWalletCardsAnimationSettings(windowAnimationOn));
 
   const historyDisplay = () => {
     props.setHistoryDisplay(false)
@@ -30,10 +25,7 @@ export const AllWalletCards: React.FunctionComponent<AllWalletCardsProps> = (pro
       </div>
       <h1 className="wallets__history__container__title">All Items</h1>
       <div className="wallets__history__container__items">
-        {props.cards.map((i) => {return <WalletCard info={i} 
-        setCards={props.setCards} 
-        setLastTenCards={props.setLastTenCards} 
-        setAllWalletCardsAnimationOn={setAllWalletCardsAnimationOn} setBalance={props.setBalance} key={i.docId}/>})}
+        {props.cards.map((i) => {return <WalletCard info={i} getCards={props.getCards} setAllWalletCardsAnimationOn={setAllWalletCardsAnimationOn} key={i.docId}/>})}
       </div>
     </animated.section>
   )

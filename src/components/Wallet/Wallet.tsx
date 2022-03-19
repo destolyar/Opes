@@ -19,13 +19,18 @@ export const Wallet: React.FunctionComponent = () => {
   const userId: string = localStorage.getItem('id') || '';
   const db: FirestoreActions = new FirestoreActions(userId);
 
+  const hideAddCardFrom = () => {
+    setFormDisplay(false)
+  }
+
+  const getCards = async (): Promise<void> => {
+    cards = await db.getWalletCards();
+    setCards(Utils.sortByDate(cards))
+    setLastTenCards(lastTenCards = cards.reverse().slice(0, 9))
+    setBalance(Utils.getBalance(cards))
+  }
+  
   useEffect(() => {
-    const getCards = async () => {
-      cards = await db.getWalletCards();
-      setCards(Utils.sortByDate(cards))
-      setLastTenCards(lastTenCards = cards.reverse().slice(0, 9))
-      setBalance(Utils.getBalance(cards))
-    }
     getCards()
   }, [])
 
@@ -42,11 +47,16 @@ export const Wallet: React.FunctionComponent = () => {
         <h1 className='wallets__balance__value'>Balance: {balance}$</h1>
       </div>
       <div className='wallets__last-transactions'>
-        {lastTenCards.map((i) => {return <WalletCard info={i} setCards={setCards} setLastTenCards={setLastTenCards} key={i.docId} setBalance={setBalance}/>})}
+        {""}
+        {lastTenCards.map((i) => {return <WalletCard info={i} getCards={getCards} key={i.docId}/>})}
       </div>
-      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay} cards={cards} setCards={setCards} 
-      setLastTenCards={setLastTenCards} setBalance={setBalance}/>
-      <AddWalletCard formDisplay={formDisplay} changeFormDisplay={setFormDisplay} setCards={setCards} setLastTenCards={setLastTenCards} setBalance={setBalance}/>
+      
+      {""}
+      
+      <AllWalletCards historyDisplay={historyDisplay} setHistoryDisplay={setHistoryDisplay} cards={cards} getCards={getCards}/>
+
+      <AddWalletCard formDisplay={formDisplay} hideAddCardFrom={hideAddCardFrom} getCards={getCards}/>
+
       <button className='wallets__add-data-button' onClick={() => setFormDisplay(true)}>
         <div className='wallets__add-data-button__plus'>
           <div className='wallets__add-data-button__plus__vertical-line'></div>

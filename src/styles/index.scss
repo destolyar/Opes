@@ -36,6 +36,7 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  overflow: hidden;
 }
 
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
@@ -78,10 +79,6 @@ select {
   }
 }
 
-body {
-  overflow: hidden;
-}
-
 // hide scrollbars
 ::-webkit-scrollbar {
   width: 0;  /* Remove scrollbar space */
@@ -104,4 +101,8 @@ body {
   @include tablets {
     padding: 30px;
   }
+}
+
+.wallets, .wallets__history__container {
+  padding-bottom: 0;
 }

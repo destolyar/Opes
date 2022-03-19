@@ -20,14 +20,6 @@ export interface FormProps {
   handleClick: (email: string, password: string) => void
 }
 
-export interface addWalletFormProps {
-  formDisplay: boolean,
-  changeFormDisplay: Dispatch<SetStateAction<boolean>>,
-  setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
-  setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
-  setBalance: Dispatch<SetStateAction<number>>
-}
-
 export interface User {
   userId: string,
   wallet: Wallet
@@ -52,17 +44,24 @@ export interface WalletCardInfo {
 
 export interface WalletCardInfoProps {
   info: WalletCardInfo,
-  setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
-  setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
   setAllWalletCardsAnimationOn?: Dispatch<SetStateAction<boolean>>,
-  setBalance: Dispatch<SetStateAction<number>>
+  getCards: () => any
 }
 
 export interface AllWalletCardsProps {
   cards: WalletCardInfo[],
   historyDisplay: boolean,
   setHistoryDisplay: Dispatch<SetStateAction<boolean>>,
-  setLastTenCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
-  setCards: Dispatch<SetStateAction<WalletCardInfo[]>>,
-  setBalance: Dispatch<SetStateAction<number>>
+  getCards: () => any
+}
+
+export interface AddWalletModalProps {
+  formDisplay: boolean,
+  hideAddCardFrom: () => void,
+  getCards: () => any
+}
+
+export interface AddWalletCardFormProps {
+  getCards: () => any,
+  hideAddCardFrom: () => void,
 }

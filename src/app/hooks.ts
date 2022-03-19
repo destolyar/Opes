@@ -9,7 +9,6 @@ export const useAuth = () =>{
   if(localStorage.getItem("isAuth") === 'true'){
     return true;
   }
-
   return userAuth;
 }
 

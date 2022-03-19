@@ -76,9 +76,10 @@
         display: grid;
         overflow-y: scroll;
         width: 100%;
-        margin-top: 40px;
+        margin-top: 30px;
+        margin-bottom: 30px;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 40px;
+        grid-gap: 30px;
 
         @include desktop {
           grid-template-columns: 1fr 1fr;
@@ -106,6 +107,7 @@
   &__last-transactions {
     overflow: auto;
     margin-top: 30px;
+    padding-bottom: 30px;
     display: grid;
     grid-gap: 30px;
     grid-template-columns: 1fr 1fr 1fr;
@@ -244,6 +246,8 @@
     bottom: 80px;
     z-index: 0;
 
+    @include add-data-button;
+
     @include desktop {
       bottom: 60px;
     }
@@ -252,8 +256,10 @@
       bottom: 40px;
     }
 
-    @include add-data-button;
-
+    @include tablets {
+      bottom: 100px;
+    }
+    
     &__plus {
       position: relative;
 

@@ -1,46 +1,37 @@
 import { useState } from "react";
 import FirestoreActions from "../../firebase";
 import { WalletCardInfoProps } from "../../types"
-import Utils from "../../Utils";
 
 export const WalletCard: React.FunctionComponent<WalletCardInfoProps> = (props) => {
-  const background: string = (props.info.isIncome) ? "rgba(12, 202, 12, 0.5)" : "rgba(253, 60, 60, 0.5)"
-
-  const plus: string = (props.info.isIncome) ? "+" : "-";
   let [opacity, setOpacity] = useState('0'); 
-  
-  const userId: string = localStorage.getItem('id') || '';
-  const db: FirestoreActions = new FirestoreActions(userId);
 
-  const getCards = async () => {
-    const cards = await db.getWalletCards();
-    props.setCards(cards)
-    props.setLastTenCards(cards.reverse().slice(0, 9))
-    props.setBalance(Utils.getBalance(cards))
+  const styles = {
+    backgroundColor: (props.info.isIncome) ? "rgba(12, 202, 12, 0.5)" : "rgba(253, 60, 60, 0.5)",
+    opacity: opacity
   }
-
+      
   const deleteCard = () => {
+    const userId: string = localStorage.getItem('id') || '';
+    const db: FirestoreActions = new FirestoreActions(userId);
+
     db.deleteCard(props.info.docId)
     if(props.setAllWalletCardsAnimationOn !== undefined) {
       props.setAllWalletCardsAnimationOn(false)
     }
-    getCards()
+    props.getCards()
   }
 
   return(
     <div className="wallets__last-transactions__card" 
-    style={{backgroundColor: background}}
+    style={{backgroundColor: styles.backgroundColor}}
     onMouseOver={() => setOpacity('1')} 
     onMouseOut={() => setOpacity('0')}>
-      <div className="wallets__last-transactions__card__delete-container" style={{
-        backgroundColor: background,
-        opacity: opacity
-      }}>
+      <div className="wallets__last-transactions__card__delete-container" style={styles}>
         <p className="wallets__last-transactions__card__delete-container__text">Delete Card?</p>
         <button className="wallets__last-transactions__card__delete-container__button" onClick={() => deleteCard()} >Yes</button>
       </div>
       <div className="wallets__last-transactions__card__amount">
-        <p className="wallets__last-transactions__card__amount__text">{plus + props.info.amount}$</p>
+        <p className="wallets__last-transactions__card__amount__text">{`${props.info.isIncome ? "+" : "-"}`+ props.info.amount}$</p>
       </div>
       <div className="wallets__last-transactions__card__info">
         <p className="wallets__last-transactions__card__info__text">date: {props.info.date}</p>

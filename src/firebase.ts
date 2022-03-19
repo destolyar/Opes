@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, getDocs, query, where, CollectionReference, DocumentData, addDoc, deleteDoc, doc, updateDoc, setDoc, DocumentReference } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, where, CollectionReference, DocumentData, addDoc, deleteDoc, doc, setDoc, DocumentReference } from 'firebase/firestore';
 import { WalletCardInfo } from "./types";
 
 

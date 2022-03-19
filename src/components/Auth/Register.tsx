@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../app/slices/userSlice'
 import { setLogIn } from '../../app/slices/authSlice';
 import { useState } from 'react';
+import { authAnimationSettings } from '../../animationsSettings';
 
 export const Register: React.FunctionComponent = () => {
   const dispatch = useDispatch()
@@ -35,11 +36,7 @@ export const Register: React.FunctionComponent = () => {
       .catch(() => {setErrorText(errorText = "Something went wrong. Please try again.")})
   }
 
-  const textDisplay = useSpring({
-    to: { opacity: 1 },
-    from: { opacity: 0 },
-    config: {duration: 5000}
-  })
+  const textDisplay = useSpring(authAnimationSettings)
 
   return(
     <section className='register'>
@@ -48,11 +45,10 @@ export const Register: React.FunctionComponent = () => {
           as wealth itself increases (Juvenalis)</h1>
       </animated.h1>}
       
-
       <Form title="register" handleClick={handleRegister}/>
 
       <p className='login__error'>{errorText}</p>
-
+      
       <p className='register__text'>Already have account?
         <Link className='register__text__link' to="/login"> Login</Link>
       </p>
