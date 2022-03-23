@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { animated, useSpring } from "react-spring";
-import { AddWalletModalProps } from "../../types";
+import { FormContext } from "../../context/context";
+import { AddWalletModalProps, formContext } from "../../types";
 import { AddWalletCardForm } from "./AddWalletCardForm";
 
 export const AddWalletCard: React.FunctionComponent<AddWalletModalProps> = (props) => {
@@ -11,12 +13,14 @@ export const AddWalletCard: React.FunctionComponent<AddWalletModalProps> = (prop
       duration: 500}
   });
   
+  const form: formContext = useContext(FormContext)
+
   return(
-    <animated.div style={(props.formDisplay) ? formDisplayAnimation : {}} className='wallets__add-data-window-container' onClick={(e) => {
+    <animated.div style={(form.formDisplay) ? formDisplayAnimation : {}} className='wallets__add-data-window-container' onClick={(e) => {
       const target = e.target as HTMLTextAreaElement;
-      if (target.className.toString() === 'wallets__add-data-window-container') props.hideAddCardFrom()
+      if (target.className.toString() === 'wallets__add-data-window-container') form.setFormDisplay(false)
       }}>
-      <AddWalletCardForm getCards={props.getCards} hideAddCardFrom={props.hideAddCardFrom}/>
+      <AddWalletCardForm getCards={props.getCards}/>
     </animated.div>
   )
 }

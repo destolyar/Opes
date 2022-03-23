@@ -1,7 +1,8 @@
 import moment from "moment"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { FormContext } from "../../context/context"
 import FirestoreActions from "../../firebase"
-import { AddWalletCardFormProps } from "../../types"
+import { AddWalletCardFormProps, formContext } from "../../types"
 import Utils from "../../Utils"
 
 export const AddWalletCardForm: React.FunctionComponent<AddWalletCardFormProps> = (props) => {
@@ -14,6 +15,8 @@ export const AddWalletCardForm: React.FunctionComponent<AddWalletCardFormProps> 
   let [isIncome, setIsIncome] = useState<boolean | undefined>(undefined)
 
   let [error, setError] = useState<boolean>(false)
+
+  const form: formContext = useContext(FormContext)
 
   const userId: string = localStorage.getItem('id') || ''
   const db: FirestoreActions = new FirestoreActions(userId);
@@ -45,7 +48,7 @@ export const AddWalletCardForm: React.FunctionComponent<AddWalletCardFormProps> 
         userId: userId 
       })
     props.getCards()
-    props.hideAddCardFrom()
+    form.setFormDisplay(false)
   }
 
   return(

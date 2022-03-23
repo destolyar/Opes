@@ -1,22 +1,24 @@
 import { animated, useSpring } from "react-spring";
 import { WalletCard } from './WalletCard';
-import { AllWalletCardsProps } from "../../types"
-import { useState } from "react";
+import { AllWalletCardsProps, historyContext } from "../../types"
+import { useContext, useState } from "react";
 import { allWalletCardsAnimationSettings } from "../../animationsSettings";
+import { HistoryContext } from "../../context/context";
 
 export const AllWalletCards: React.FunctionComponent<AllWalletCardsProps> = (props) => {
 
   let [windowAnimationOn, setAllWalletCardsAnimationOn] = useState<boolean>(true)
   
   const formDisplayAnimation = useSpring(allWalletCardsAnimationSettings(windowAnimationOn));
+  const history: historyContext = useContext(HistoryContext)
 
   const historyDisplay = () => {
-    props.setHistoryDisplay(false)
+    history.setHistoryDisplay(false)
     setAllWalletCardsAnimationOn(true)
   }
   
   return(
-    <animated.section style={(props.historyDisplay) ? formDisplayAnimation : {display: 'none'}} className="wallets__history__container">
+    <animated.section style={(history.historyDisplay) ? formDisplayAnimation : {display: 'none'}} className="wallets__history__container">
       <div className="wallets__history__container__close-container" onClick={() => historyDisplay()}>
         <div className="wallets__history__container__close-container__close">
           <div className="wallets__history__container__close-container__close__first-line"></div>

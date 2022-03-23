@@ -50,18 +50,23 @@ export interface WalletCardInfoProps {
 
 export interface AllWalletCardsProps {
   cards: WalletCardInfo[],
-  historyDisplay: boolean,
-  setHistoryDisplay: Dispatch<SetStateAction<boolean>>,
   getCards: () => any
 }
 
 export interface AddWalletModalProps {
-  formDisplay: boolean,
-  hideAddCardFrom: () => void,
   getCards: () => any
 }
 
 export interface AddWalletCardFormProps {
   getCards: () => any,
-  hideAddCardFrom: () => void,
+}
+
+export interface formContext {
+  formDisplay: boolean,
+  setFormDisplay: Dispatch<SetStateAction<boolean>>
+}
+
+export interface historyContext {
+  historyDisplay: boolean,
+  setHistoryDisplay: Dispatch<SetStateAction<boolean>>
 }
